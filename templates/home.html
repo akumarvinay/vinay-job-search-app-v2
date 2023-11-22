@@ -7,6 +7,7 @@
          width: 100%;
          height: 360px;
          object-fit: cover;
+           padding-bottom: 15px;
          }
       </style>
       <meta charset="utf-8">
@@ -14,22 +15,29 @@
       <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
    </head>
    <body>
+      {% include 'nav-bar.html' %}
+      <h1 class="text-center mt-2 mb-4"> {{company}} Devops and Cloud careers</h1>
+      <img id="banner" class="img-fluid" src= "/static/banner.jpg">
       <div class=container>
-         <h1 class="text-center mt-2 mb-4"> {{company}} Devops and Cloud careers</h1>
-         <img id="banner" class="img-fluid" src= "https://vinay-job-search-app--akumarvinay.repl.co/static/banner.jpg">
          <h2 class="text-center mt-2 mb-4">About Devops and Cloud</h2>
-         <p class="lead">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+
+         <div class="row mb-5">
+           <div class="col-md-6">
+              <p class="lead">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+          </div>
+          <div class="d-none d-md-block col-md-6">
+                 <image src="/static/colleagues.jpg" style="height: 300px; border-radius: 20px">
+          </div>
+        </div>
          <h2 class="text-center mt-2 mb-4">Job Openings Information</h2>
           <div>
             {% for job in jobs %}
               {% include 'jobsinfo.html' %}
             {% endfor %}
           </div>
-         <p class="text-center">TO DO - jobs listing here</p>
-        
          <div class="text-center">
-            <button  class="btn btn-primary btn-lg">Contact US</button>
-            <p class=mt-4> CopyRight 2023, Vinay</p>
+            <a  target="_blank" href="mailto:avinaykumar@devops.com?subject=Question%20about%20job%20openings&body=A%20simple%20body%0D%0A" class="btn btn-primary btn-lg">Contact US</a>
+            {% include 'footer.html' %}
          </div>
       </div>
    </body>

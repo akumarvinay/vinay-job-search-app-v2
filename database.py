@@ -17,7 +17,22 @@ def retrieve_jobs():
 
     row_dictionaries = []
     # _mapping is used to convert row into python dictionary
-    for every_row in result.all():
-      row_dictionaries.append(every_row._mapping)
+    result_all = result.all()
+
+    for every_row in result_all:
+      row_dictionaries.append(dict(every_row._mapping))
 
     return row_dictionaries
+
+
+def retrieve_job_info(jobid):
+  with engine.connect() as con:
+    result = con.execute(text("select * from jobs where id = :val"),
+                         {"val": jobid})
+    jobInfo = result.all()
+    if len(jobInfo) == 0:
+      return None
+    else:
+      job_row = jobInfo[0]
+      dictobj = dict(job_row._mapping)
+      return dictobj

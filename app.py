@@ -1,33 +1,8 @@
 from flask import Flask, jsonify, render_template
 
-from database import retrieve_jobs
+from database import retrieve_job_info, retrieve_jobs
 
 app = Flask(__name__)
-
-# JOBS = [{
-#     "ID": "10012",
-#     "Tittle": "Python Developer",
-#     "Location": "Bangalore",
-#     "Salary": "Rs. 10,00,000",
-#     "Experience": "2 Years"
-# }, {
-#     "ID": "10013",
-#     "Tittle": "Java Developer",
-#     "Location": "Delhi",
-#     "Experience": "3 Years"
-# }, {
-#     "ID": "10014",
-#     "Tittle": "Devops Engineer",
-#     "Location": "Mumbai",
-#     "Salary": "Rs. 12,00,000",
-#     "Experience": "2 Years"
-# }, {
-#     "ID": "10015",
-#     "Tittle": "Cloud Support Engineer",
-#     "Location": "Bangalore",
-#     "Experience": "3 Years",
-#     "Salary": "Rs. 10,00,000"
-# }]
 
 
 @app.route("/")
@@ -40,6 +15,15 @@ def sayhello():
 def listjobs():
   JOBS = retrieve_jobs()
   return jsonify(JOBS)
+
+
+@app.route("/job/<id>")
+def get_job_info(id):
+  job_info = retrieve_job_info(id)
+  #return jsonify(job_info)
+  if job_info is None:
+    return 'Not found', 404
+  return render_template("job-details.html", job=job_info)
 
 
 if __name__ == "__main__":

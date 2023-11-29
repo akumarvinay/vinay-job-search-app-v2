@@ -1,5 +1,4 @@
 from flask import Flask, jsonify, render_template, request
-
 from database import add_job_application_into_db, get_applications_from_db, retrieve_job_info, retrieve_jobs
 
 app = Flask(__name__)

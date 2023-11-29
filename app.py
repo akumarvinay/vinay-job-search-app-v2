@@ -1,33 +1,8 @@
-from flask import Flask, jsonify, render_template
+from flask import Flask, jsonify, render_template, request
 
-from database import retrieve_jobs
+from database import add_job_application_into_db, get_applications_from_db, retrieve_job_info, retrieve_jobs
 
 app = Flask(__name__)
-
-# JOBS = [{
-#     "ID": "10012",
-#     "Tittle": "Python Developer",
-#     "Location": "Bangalore",
-#     "Salary": "Rs. 10,00,000",
-#     "Experience": "2 Years"
-# }, {
-#     "ID": "10013",
-#     "Tittle": "Java Developer",
-#     "Location": "Delhi",
-#     "Experience": "3 Years"
-# }, {
-#     "ID": "10014",
-#     "Tittle": "Devops Engineer",
-#     "Location": "Mumbai",
-#     "Salary": "Rs. 12,00,000",
-#     "Experience": "2 Years"
-# }, {
-#     "ID": "10015",
-#     "Tittle": "Cloud Support Engineer",
-#     "Location": "Bangalore",
-#     "Experience": "3 Years",
-#     "Salary": "Rs. 10,00,000"
-# }]
 
 
 @app.route("/")
@@ -40,6 +15,31 @@ def sayhello():
 def listjobs():
   JOBS = retrieve_jobs()
   return jsonify(JOBS)
+
+
+@app.route("/job/<id>")
+def get_job_info(id):
+  job_info = retrieve_job_info(id)
+  #return jsonify(job_info)
+  if job_info is None:
+    return 'Not found', 404
+  return render_template("job-details.html", job=job_info)
+
+
+@app.route("/job/<id>/apply", methods=["POST"])
+def apply_job(id):
+  job_id = id
+  applicant_info = request.form  # Arguments sent in input form
+  add_job_application_into_db(applicant_info, job_id)
+  return render_template("application_submitted.html",
+                         userInfo=applicant_info,
+                         jobid=job_id)
+
+
+@app.route("/api/applications")
+def get_all_applications():
+  applications = get_applications_from_db()
+  return jsonify(applications)
 
 
 if __name__ == "__main__":

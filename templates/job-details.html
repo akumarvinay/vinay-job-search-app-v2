@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+  <head>
+     {% include 'bootstrapit.html' %}
+    <title>{{ job.title}}</title>
+  </head>
+  <body>
+    {% include 'nav-bar.html'%}
+    {% include 'banner-image.html'%}
+    <div class="container">
+    <h4>{{ job.title }}</h4>
+    <p>{{ job.location }}</p>
+    <h4>Responsibilities</h4>
+      {% for line in job.responsibilities.split('\n') %}
+      <ul>
+        <li>{{line }}</li>
+      </ul>
+      {% endfor %}
+    <h4>Requirements</h4>
+      <ol>
+        {% for req in job.requirements.split("\n") %}
+        <li><p>{{ req }}<p></p></li>
+      {% endfor %}
+         </ol>
+    <h4>Salary</h4>
+    <p>{{ job.currency }}{{ job.salary }}</p>
+      <div class="text-center mt-4 row border-top">
+        <div>
+        <h3 class="mt-4">Job Application Form</h3>
+        </div>
+      </div>
+      
+     {% include 'application_form.html' %}
+      <!-- <div class="text-center"><a href="#" class="btn btn-primary btn-lg">Apply</a>
+      </div -->
+    </div>
+    {% include 'footer.html' %}
+  </body 
+</html>
